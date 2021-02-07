@@ -8,9 +8,10 @@ const MainRouter = () =>(
     <div>
         <Switch>
         <Route path="/signup" component={Signup}>
-                </Route>
-                <Route path="/" component={Home}>
-                </Route>
+        </Route>
+        
+        <Route path="/" component={Home}>
+        </Route>
                
         </Switch>
     </div>

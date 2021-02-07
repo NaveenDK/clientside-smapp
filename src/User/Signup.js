@@ -9,7 +9,8 @@ class Signup extends Component{
             name:"",
             email:"",
             password:"",
-            error:""
+            error:"",
+            open:false
         }
     }
 
@@ -33,38 +34,72 @@ class Signup extends Component{
 
        // console.log(user);
 
-       fetch('http://localhost:8080/signup',{
-           method:"POST",
-           headers:{
-                Accept:"application/JSON",
-                
-                "Content-type":"application/json"
+     this.signup(user)
+     .then(data=>{
+         if(data.error) this.setState({error:data.error})
+            else this.setState({
 
-           },
+                error: "",
+                name: "",
+                email:"",
+                password:"",
+                open:true
 
-           body:JSON.stringify(user)
-        })
-           .then(
-               response=>{
-                   return response.json()
-
-               }
-           )
-            .catch(err=>{
-                console.log(err)
             })
+        
+     })
+    }
+
+    signup = user =>{
+      return  fetch('http://localhost:8080/signup',{
+            method:"POST",
+            headers:{
+                 Accept:"application/JSON",
+                 
+                 "Content-type":"application/json"
+ 
+            },
+ 
+            body:JSON.stringify(user)
+         })
+            .then(
+                response=>{
+                    return response.json()
+ 
+                }
+            )
+             .catch(err=>{
+                 console.log(err)
+             })
 
     }
 
     render(){
-
-        const {name, email, password} = this.state
+        //const {}
+        const {name, email, password, error,open} = this.state
 
         return(
             <div className="container">
                 <h2 className="mt-5 mb-5"> 
                 Signup
                 </h2>
+
+                <div className="alert alert-primary" style={{
+
+                    display:error?"":"none"
+                }}>
+                        {error}
+                </div>
+
+                
+                <div className="alert alert-info" style={{
+
+                    display:open?"":"none"
+                }}>
+                 New Account is successfully created, please sign in.
+                </div>
+
+
                  <form>
                     <div className="form-group">
                         <label className="text-muted">
