@@ -9,7 +9,8 @@ class Signin extends Component{
             email:"",
             password:"",
             error:"",
-            redirectToReferer:false
+            redirectToReferer:false,
+            loading:false
         }
     }
 
@@ -29,6 +30,8 @@ class Signin extends Component{
 
     clickSubmit = event=>{
         event.preventDefault();
+
+        this.setState({loading:true})
         
         const {email, password} = this.state
 
@@ -42,7 +45,7 @@ class Signin extends Component{
 
      this.signin(user)
      .then(data=>{
-         if(data.error) this.setState({error:data.error})
+         if(data.error) this.setState({error:data.error,loading:false})
             else {
                 //authenticate
                 this.authenticate(data,()=>{
@@ -106,7 +109,7 @@ class Signin extends Component{
 
     render(){
         //const {}
-        const { email, password, error ,redirectToReferer } = this.state
+        const { email, password, error ,redirectToReferer,loading } = this.state
 
         if(redirectToReferer) {
             
@@ -127,6 +130,19 @@ class Signin extends Component{
                 }}>
                         {error}
                 </div>
+
+                {loading? (<div className="jumbotron text-center">
+
+                    <h2>
+
+                        Loading..
+                    </h2>
+
+                </div>):
+                (
+                    ""
+                )
+                }
 
                 {this.signinForm(  email, password)}
             </div>
