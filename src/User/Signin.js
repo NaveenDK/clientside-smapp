@@ -1,5 +1,6 @@
 import React , {Component} from 'react'
 import {Redirect} from "react-router-dom"
+import SocialLogin from "./SocialLogin";
 
 class Signin extends Component{
 
@@ -58,7 +59,7 @@ class Signin extends Component{
     }
 
     signin = user =>{
-      return  fetch('http://localhost:8080/signin',{
+      return  fetch('http://128.199.82.155/api/signin',{
             method:"POST",
             headers:{
                  Accept:"application/JSON",
@@ -123,6 +124,9 @@ class Signin extends Component{
                 <h2 className="mt-5 mb-5"> 
                 Sign in
                 </h2>
+                <hr />
+                <SocialLogin />
+                <hr />
 
                 <div className="alert alert-danger" style={{
 
