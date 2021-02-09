@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-
+import {Link} from 'react-router-dom'
 
 class Signup extends Component{
 
@@ -23,31 +23,7 @@ class Signup extends Component{
 
     clickSubmit = event=>{
         event.preventDefault();
-        
-        const {name,email, password} = this.state
-
-        const user = {
-            name,
-            email,
-            password
-        }
-
-       // console.log(user);
-
-     this.signup(user)
-     .then(data=>{
-         if(data.error) this.setState({error:data.error})
-            else this.setState({
-
-                error: "",
-                name: "",
-                email:"",
-                password:"",
-                open:true
-
-            })
-        
-     })
+  
     }
 
     signup = user =>{
@@ -76,32 +52,23 @@ class Signup extends Component{
 
     signupForm = (name, email, password) =>(
         
-        <form>
-        <div className="form-group">
-            <label className="text-muted">
-                Name
-            </label>
-            <input onChange={this.handleChange("name")} type="text" className="form-control" value={name}>
-            </input>
-        </div>
-        <div className="form-group">
-            <label className="text-muted">
-                Email
-            </label>
-            <input onChange={this.handleChange("email")} type="email" className="form-control" value={email}>
-            </input>
-        </div>
-        <div className="form-group">
-            <label className="text-muted">
-                Password
-            </label>
-            <input onChange={this.handleChange("password")} type="password" className="form-control" value={password}>
-            </input>
-        </div>
 
-        <button onClick={this.clickSubmit}className="btn btn-raised btn-primary">
-            Submit
-        </button>
+        <form >
+      <div className="formBox">
+      <div className="pt-2"></div> 
+      <h1 class="h3 mb-3 font-weight-normal"> Sign Up</h1>
+     
+      <div className="pt-5"></div> 
+      <h4> Please select  <br></br> registration type</h4>
+      <div className="pt-4"></div>
+        <Link to="/membersignup" > <div class="btn btn-raised btn-primary fixed-width">
+      I'm an individual</div>
+        </Link> 
+         <div className="pt-2"></div>
+        <Link to="/organizationsignup" >  <div class="btn btn-raised btn-primary fixed-width">
+      We're an organization </div>
+            </Link>
+ </div>
      </form>
     )
 
@@ -112,9 +79,7 @@ class Signup extends Component{
 
         return(
             <div className="container">
-                <h2 className="mt-5 mb-5"> 
-                Signup
-                </h2>
+                
 
                 <div className="alert alert-primary" style={{
 

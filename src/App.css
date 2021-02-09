@@ -1,0 +1,39 @@
+
+
+.form-selection{
+   
+    width: 100%;
+    max-width: 620px;
+    padding: 15px;
+    margin: 0 auto;
+    text-align:left;
+}
+
+.formBox {
+    max-width: 600px; 
+    border: 0px solid #7a7171;
+    padding: 20px;
+   
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+
+.btn.btn-raised.btn-primary.fixed-width {
+    width: 240px;
+}
+
+body {
+    text-align: center;
+}
+form {
+    display: inline-block;
+}
+
+.biggerFormBox{
+    text-align: left!important;
+}
+
+.biggerFormBox form {
+    width: 100%;
+   
+}
