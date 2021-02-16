@@ -56,10 +56,14 @@ const Menu = ({history}) =>(
             }
 
            {isLoggedIn() &&
-               
+            <>
             <li classNames="nav-item">
             <Link className="nav-link" style={isActive(history,"/signup")}   onClick={()=>signout(()=>history.push('/'))} >Sign Out</Link>
             </li>
+            <li classNames="nav-item">
+            <Link className="nav-link" >{isLoggedIn().user.name}</Link>
+            </li>
+            </>
            }
 
     </ul>

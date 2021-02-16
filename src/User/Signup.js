@@ -1,4 +1,5 @@
 import React , {Component} from 'react'
+import {signup} from '../auth';
 
 
 class Signup extends Component{
@@ -50,29 +51,7 @@ class Signup extends Component{
      })
     }
 
-    signup = user =>{
-      return  fetch('http://localhost:8080/api/signup',{
-            method:"POST",
-            headers:{
-                 Accept:"application/JSON",
-                 
-                 "Content-type":"application/json"
- 
-            },
- 
-            body:JSON.stringify(user)
-         })
-            .then(
-                response=>{
-                    return response.json()
- 
-                }
-            )
-             .catch(err=>{
-                 console.log(err)
-             })
 
-    }
 
     signupForm = (name, email, password) =>(
         
