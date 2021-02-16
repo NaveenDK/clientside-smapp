@@ -1,7 +1,7 @@
 import React , {Component} from 'react'
 import {Redirect} from "react-router-dom"
 import SocialLogin from "./SocialLogin";
-import {signin, authenticate} from '../auth';
+import {signin} from '../auth';
 
 class Signin extends Component{
 
@@ -45,7 +45,7 @@ class Signin extends Component{
 
        // console.log(user);
 
-     this.signin(user)
+     signin(user)
      .then(data=>{
          if(data.error) this.setState({error:data.error,loading:false})
             else {
@@ -59,29 +59,7 @@ class Signin extends Component{
      })
     }
 
-    signin = user =>{
-      return  fetch('http://localhost:8080/api/signin',{
-            method:"POST",
-            headers:{
-                 Accept:"application/JSON",
-                 
-                 "Content-type":"application/json"
- 
-            },
- 
-            body:JSON.stringify(user)
-         })
-            .then(
-                response=>{
-                    return response.json()
- 
-                }
-            )
-             .catch(err=>{
-                 console.log(err)
-             })
-
-    }
+    
 
     signinForm = (   email, password) =>(
         
