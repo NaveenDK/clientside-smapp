@@ -25,22 +25,43 @@ export const signout = (next)=>{
     )
 }
 
+export const isLoggedIn = () =>{
+
+    if(typeof window == "undefined"){
+        return false
+    }
+    if(localStorage.getItem("jwt")){
+        return JSON.parse(localStorage.getItem("jwt"))
+    }else{
+        return false
+    }
+}
 
 const Menu = ({history}) =>(
     <div> 
-       <ul className="nav nav-tabs bg-secondary">
+       <ul className="nav nav-tabs blue">
             <li className="nav-item">
             <Link className="nav-link" style={isActive(history,"/")} to="/" >Home</Link>
             </li>
+
+            {!isLoggedIn() && 
+            <>
             <li className="nav-item">
             <Link  className="nav-link"   style={isActive(history,"/signin")}  to="/signin" >Sign In</Link>
             </li>
             <li classNames="nav-item">
             <Link className="nav-link" style={isActive(history,"/signup")}  to="/signup" >Sign Up</Link>
             </li>
+            </>
+            }
+
+           {isLoggedIn() &&
+               
             <li classNames="nav-item">
             <Link className="nav-link" style={isActive(history,"/signup")}   onClick={()=>signout(()=>history.push('/'))} >Sign Out</Link>
             </li>
+           }
+
     </ul>
         
 
