@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+variable_guide.md
 .txt
 /.pnp
 .pnp.js
