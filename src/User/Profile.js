@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {isLoggedIn} from '../auth'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
+import {read} from './apiUser'
 
 class Profile extends Component{
 
@@ -12,56 +13,73 @@ class Profile extends Component{
                     }
                 }
 
+       
+        init = (userId) =>{
+        const token = isLoggedIn().token 
+          read(userId, token)
+            .then(data=>{
+                if(data.error){
+                this.setState({redirectToSignin:true})
+
+                }else{
+                    this.setState({ user:data })
+                }
+            })
+
+        }
+
 
         componentDidMount(){
             
             console.log("user id from route params:", this.props.match.params.user_Id);
 
             const user_Id = this.props.match.params.user_Id;
-                fetch(`${process.env.REACT_APP_API_URL}/user/${user_Id}`,{
-                    method:"GET",
-                    headers:{
-                        Accept:"application/json",
-                        "Content-Type": "application/json",
-                        Authorization:`Bearer ${isLoggedIn().token}`
-                    }
-                })
-                .then(response =>{
-                    return response.json();
-                })
-                .then(data=>{
-                    if(data.error){
-                    this.setState({redirectToSignin:true})
+            this.init(user_Id);
 
-                    }else{
-                        this.setState({ user:data })
-                    }
-                })
+              
         }
 
 
 
         render() {
 
-                const redirectToSignin = this.state.redirectToSignin
+                const {redirectToSignin, user}  = this.state
                 if(redirectToSignin) return <Redirect to="/signin" />
 
 
                 return (
 
                     <div className="container">
-
-                            <h2 className="mt-5 mb-5"> 
-                            Profile
-                            </h2>
-                            <p> Hello {isLoggedIn().user.name}</p>
-                            <p> Email: {isLoggedIn().user.email}</p>
-                            <p>{
-                                `Joined ${new Date(
-                                    this.state.user.created
-                                ).toDateString()}`
-                                }</p>
-
+                        <div className="row">
+                            <div className="col-md-6">
+                                    
+                                    <h2 className="mt-5 mb-5"> Profile</h2>
+                                    <p> Hello {isLoggedIn().user.name}</p>
+                                    <p> Email: {isLoggedIn().user.email}</p>
+                                    <p>{
+                                            `Joined ${new Date(
+                                                this.state.user.created
+                                            ).toDateString()}`
+                                            }
+                                    </p>
+                            </div>
+                            <div className="col-md-6">
+                                {isLoggedIn().user && isLoggedIn().user._id == user._id && (
+                                    <div className="d-inline-block mt-5">
+                                        <Link 
+                                        className="btn btn-raised btn-success mr-5"
+                                        to={'/user/edit/${user._id}'}
+                                        >
+                                            Edit Profile
+                                        </Link>
+                                        <button className="btn btn-raised btn-danger">
+                                            Delete Profile
+                                        </button>
+                                    </div>
+                                )}        
+                                
+                            </div>
+                        </div>
                     </div>
 
                 )
