@@ -18,7 +18,7 @@ const MainRouter = () =>(
         </Route>
         <Route exact path="/signin" component={Signin}>
         </Route>
-        <Route exact path="/user/:user_id" component={Profile}>
+        <Route exact path="/user/:user_Id" component={Profile}>
         </Route>
        
 
