@@ -2,6 +2,20 @@ import React, {Component} from 'react'
 
 class Profile extends Component{
 
+   constructor(){
+       super()
+       this.state={
+           user:"",
+           redirectToSignin:false
+       }
+   }
+
+componentDidMount(){
+    console.log("user id from route params:", this.props.match.params.userId);
+}
+
+
+
     render(){
         return (
 
