@@ -15,3 +15,16 @@ export const read = (user_Id, token)=>{
 
 
   }
+
+  export const list = (user_Id, token)=>{
+            
+    return   fetch(`${process.env.REACT_APP_API_URL}/users`,{
+          method:"GET"
+      })
+      .then(response =>{
+          return response.json();
+      })
+      .catch(err=>console.log(err))
+
+
+  }

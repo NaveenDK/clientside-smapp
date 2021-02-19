@@ -43,6 +43,9 @@ const Menu = ({history}) =>(
             <li className="nav-item">
             <Link className="nav-link" style={isActive(history,"/")} to="/" >Home</Link>
             </li>
+            <li className="nav-item">
+            <Link className="nav-link" style={isActive(history,"/")} to="/users" >Users</Link>
+            </li>
 
             {!isLoggedIn() && 
             <>
@@ -63,6 +66,7 @@ const Menu = ({history}) =>(
             <li classNames="nav-item">
             <Link className="nav-link"   style={isActive(history,`/user/${isLoggedIn().user._id}`)} to={`/user/${isLoggedIn().user._id}`}>{isLoggedIn().user.name}</Link>
             </li>
+            
             </>
            }
 
