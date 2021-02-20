@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {isLoggedIn} from '../auth'
 import { Redirect, Link } from 'react-router-dom'
 import {read} from './apiUser'
+import DefaultProfile from '../images/avatar.png'
 
 class Profile extends Component{
 
@@ -50,20 +51,33 @@ class Profile extends Component{
                 return (
 
                     <div className="container">
+                        <h2 className="mt-5 mb-5"> Profile</h2>
                         <div className="row">
                             <div className="col-md-6">
-                                    
-                                    <h2 className="mt-5 mb-5"> Profile</h2>
-                                    <p> Hello {isLoggedIn().user.name}</p>
-                                    <p> Email: {isLoggedIn().user.email}</p>
+                            
+                                   <img
+                                   className="card-img-top"
+                                   src={DefaultProfile}
+                                   alt={user.name}
+                                   src={DefaultProfile}
+                                   style={{
+                                       width:"100%",
+                                       height:"15vw",
+                                       objectFit:"cover"
+                                   }}
+                                   
+                                   />
+                            </div>
+                            <div className="col-md-6 mt-2">
+                           
+                                    <p> Hello {user.name}</p>
+                                    <p> Email: {user.email}</p>
                                     <p>{
                                             `Joined ${new Date(
                                                 this.state.user.created
                                             ).toDateString()}`
                                             }
                                     </p>
-                            </div>
-                            <div className="col-md-6">
                                 {isLoggedIn().user && isLoggedIn().user._id == user._id && (
                                     <div className="d-inline-block mt-5">
                                         <Link 
