@@ -3,6 +3,8 @@ import {isLoggedIn} from '../auth'
 import { Redirect, Link } from 'react-router-dom'
 import {read} from './apiUser'
 import DefaultProfile from '../images/avatar.png'
+import DeleteUser from './DeleteUser'
+
 
 class Profile extends Component{
 
@@ -40,6 +42,11 @@ class Profile extends Component{
               
         }
 
+
+        componentWillReceiveProps(props){
+            const user_Id = props.match.params.user_Id
+            this.init(user_Id)
+        }
 
 
         render() {
@@ -86,9 +93,7 @@ class Profile extends Component{
                                         >
                                             Edit Profile
                                         </Link>
-                                        <button className="btn btn-raised btn-danger">
-                                            Delete Profile
-                                        </button>
+                                        <DeleteUser/>
                                     </div>
                                 )}        
                                 
