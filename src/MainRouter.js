@@ -7,6 +7,7 @@ import Signin from './User/Signin';
 import Profile from './User/Profile';
 import Users from './User/Users';
 import EditProfile from "./User/EditProfile"
+import PrivateRoute from './auth/PrivateRoute'
 
 
 const MainRouter = () =>(
@@ -24,10 +25,10 @@ const MainRouter = () =>(
         </Route>
         <Route exact path="/signin" component={Signin}>
         </Route>
-        <Route exact path="/user/edit/:user_Id" component={EditProfile}>
-        </Route>
-        <Route exact path="/user/:user_Id" component={Profile}>
-        </Route>
+        <PrivateRoute exact path="/user/edit/:user_Id" component={EditProfile}>
+        </PrivateRoute>
+        <PrivateRoute exact path="/user/:user_Id" component={Profile}>
+        </PrivateRoute>
        
 
                
