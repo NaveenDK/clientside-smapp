@@ -17,6 +17,8 @@ export const read = (user_Id, token)=>{
   }
 
   export const update = (user_Id, token,user)=>{
+    
+    
             
     return   fetch(`${process.env.REACT_APP_API_URL}/user/${user_Id}`,{
           method:"PUT",
