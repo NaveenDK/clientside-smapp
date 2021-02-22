@@ -56,14 +56,19 @@ class EditProfile extends Component {
         }
 
         componentDidMount(){
+            this.userData = new FormData()
+
             console.log("user id from route params:", this.props.match.params.user_Id);
             const user_Id = this.props.match.params.user_Id;
             this.init(user_Id);
         }
 
         handleChange = (name) => (event)=>{
+
+            const value = name === 'photo'? event.target.files[0] : event.target.value
+            this.userData.set(name,value)
             this.setState({
-                [name]:event.target.value
+                [name]: value
             });
     
         }
@@ -83,7 +88,7 @@ class EditProfile extends Component {
            const user_Id = this.props.match.params.user_Id
            const token = isLoggedIn().token;
 
-           update(user_Id, token, user).then(data =>{
+           update(user_Id, token, this.userData).then(data =>{
                if(data.error) this.setState({error:data.error})
                else 
                 this.setState({
@@ -96,6 +101,14 @@ class EditProfile extends Component {
         signupForm = (name, email, password) =>(
         
             <form>
+             <div className="form-group">
+                <label className="text-muted">
+                   Profile Photo
+                </label>
+                <input onChange={this.handleChange("photo")} type="file" accept="image/*" className="form-control"  >
+                </input>
+            </div>
+
             <div className="form-group">
                 <label className="text-muted">
                     Name

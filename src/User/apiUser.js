@@ -22,10 +22,9 @@ export const read = (user_Id, token)=>{
           method:"PUT",
           headers:{
               Accept:"application/json",
-              "Content-Type": "application/json",
               Authorization:`Bearer ${token}`
           },
-          body: JSON.stringify(user)
+          body: user
       })
       .then(response =>{
           return response.json();
