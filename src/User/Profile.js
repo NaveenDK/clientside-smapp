@@ -89,7 +89,7 @@ class Profile extends Component{
                                     <div className="d-inline-block mt-5">
                                         <Link 
                                         className="btn btn-raised btn-success mr-5"
-                                        to={'/user/edit/${user._id}'}
+                                        to={`/user/edit/${user._id}`}
                                         >
                                             Edit Profile
                                         </Link>

@@ -16,6 +16,25 @@ export const read = (user_Id, token)=>{
 
   }
 
+  export const update = (user_Id, token,user)=>{
+            
+    return   fetch(`${process.env.REACT_APP_API_URL}/user/${user_Id}`,{
+          method:"PUT",
+          headers:{
+              Accept:"application/json",
+              "Content-Type": "application/json",
+              Authorization:`Bearer ${token}`
+          },
+          body: JSON.stringify(user)
+      })
+      .then(response =>{
+          return response.json();
+      })
+      .catch(err=>console.log(err))
+
+
+  }
+
   export const remove = (user_Id, token)=>{
             
     return   fetch(`${process.env.REACT_APP_API_URL}/user/${user_Id}`,{
