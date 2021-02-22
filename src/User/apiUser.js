@@ -16,9 +16,9 @@ export const read = (user_Id, token)=>{
 
   }
 
-  export const update = (user_Id, token,user)=>{
-    
-    
+export const update = (user_Id, token,user)=>{
+
+    console.log("UPDATE USER ", user)
             
     return   fetch(`${process.env.REACT_APP_API_URL}/user/${user_Id}`,{
           method:"PUT",
@@ -32,7 +32,6 @@ export const read = (user_Id, token)=>{
           return response.json();
       })
       .catch(err=>console.log(err))
-
 
   }
 
