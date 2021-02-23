@@ -54,6 +54,9 @@ class Profile extends Component{
                 const {redirectToSignin, user}  = this.state
                 if(redirectToSignin) return <Redirect to="/signin" />
 
+                
+                const photoUrl = user._id ?  `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}`: DefaultProfile;
+
 
                 return (
 
@@ -62,18 +65,12 @@ class Profile extends Component{
                         <div className="row">
                             <div className="col-md-6">
                             
-                                   <img
-                                   className="card-img-top"
-                                   src={DefaultProfile}
-                                   alt={user.name}
-                                   src={DefaultProfile}
-                                   style={{
-                                       width:"100%",
-                                       height:"15vw",
-                                       objectFit:"cover"
-                                   }}
-                                   
-                                   />
+                            <img  style={{height: "200px", width:'auto'}} 
+                                  className="img-thumbnail"
+                                  src ={photoUrl} alt={this.state.name}
+                                  onError = {i =>(i.target.src= `${DefaultProfile}`)}
+                             />
+
                             </div>
                             <div className="col-md-6 mt-2">
                            
@@ -98,6 +95,13 @@ class Profile extends Component{
                                 )}        
                                 
                             </div>
+                        </div>
+                        <div className="row">
+                             <div className="col md-12 mt-5 mb-5">
+                                 <hr/>
+                                 <p className="lead">{user.about}</p>
+                                 <hr/>
+                             </div>
                         </div>
                     </div>
 

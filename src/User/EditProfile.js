@@ -1,7 +1,9 @@
 import React, {Component} from "react"
 import {isLoggedIn} from '../auth'
-import {read,update} from './apiUser'
+import {read,update,updateUser} from './apiUser'
 import {Redirect} from 'react-router-dom'
+import DefaultProfile from '../images/avatar.png'
+
 
 class EditProfile extends Component {
 
@@ -15,7 +17,8 @@ class EditProfile extends Component {
             password:"",
             redirectToProfile:false,
             fileSize: 0,
-            loading:false
+            loading:false,
+            about:""
         }
     }
 
@@ -29,8 +32,8 @@ class EditProfile extends Component {
 
                 }else{
                     this.setState({ id:data._id, name:data.name, email:data.email,
-                        error: ''
-                    
+                        error: '' , about:data.about
+                
                     })
                 }
             })
@@ -42,20 +45,20 @@ class EditProfile extends Component {
         {
             const { name, email, password,fileSize} = this.state
             if(fileSize > 100000){
-                this.setState({error: "Filesize should be less than 100kb"})
+                this.setState({error: "Filesize should be less than 100kb",loading:false})
                 return false 
             }
 
             if(name.length === 0){
-                this.setState({error: "Name is required"})
+                this.setState({error: "Name is required" , loading:false} )
                 return false 
             }
             if(!/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)){
-                this.setState({error: "Please check your email"})
+                this.setState({error: "Please check your email" , loading:false})
                 return false 
             }
             if(password.length >=1 && password.length <=5){
-                this.setState({error: "Password must be at least 6 characters long"})
+                this.setState({error: "Password must be at least 6 characters long", loading:false})
                 return false 
             }
             return true
@@ -83,7 +86,7 @@ class EditProfile extends Component {
     
         }   
     
-        clickSubmit = event=>{
+clickSubmit = event=>{
             event.preventDefault();
             this.setState({loading:true})
            
@@ -96,14 +99,18 @@ class EditProfile extends Component {
            update(user_Id, token, this.userData).then(data =>{
                if(data.error) this.setState({error:data.error})
                else 
+               updateUser(data,()=>{
                 this.setState({
                     redirectToProfile:true
                 })
+
+               })
+               
            })
            }
         }
 
-        signupForm = (name, email, password) =>(
+        signupForm = (name, email, password,about) =>(
         
             <form>
              <div className="form-group">
@@ -121,6 +128,7 @@ class EditProfile extends Component {
                 <input onChange={this.handleChange("name")} type="text" className="form-control" value={name}>
                 </input>
             </div>
+
             <div className="form-group">
                 <label className="text-muted">
                     Email
@@ -129,6 +137,15 @@ class EditProfile extends Component {
                 </input>
             </div>
            
+            
+            <div className="form-group">
+                <label className="text-muted">
+                  About
+                </label>
+                <textarea onChange={this.handleChange("about")} type="text" className="form-control" value={about}/>
+            
+            </div>
+
             <div className="form-group">
                 <label className="text-muted">
                     Password
@@ -146,11 +163,13 @@ class EditProfile extends Component {
 
     render() {
 
-        const {id, name, email, password, redirectToProfile ,error,loading} = this.state
+        const {id, name, email, password, redirectToProfile ,error,loading,about} = this.state
 
         if(redirectToProfile){
           return   <Redirect to={`/user/${id}`}/>
         }
+
+        const photoUrl = id ?  `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}`: DefaultProfile;
 
         return (
 
@@ -173,8 +192,13 @@ class EditProfile extends Component {
                         ""
                         )
                         }
+                        <img  style={{height: "200px", width:'auto'}} 
+                        className="img-thumbnail"
+                        src ={photoUrl} 
+                        onError ={i=>(i.target.src = `${DefaultProfile}`)}
+                        alt={this.state.name}/>
 
-                {this.signupForm(name, email, password)}
+                {this.signupForm(name, email, password,about)}
             </div>
 
         )
