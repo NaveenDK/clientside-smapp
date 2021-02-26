@@ -14,7 +14,8 @@ class Profile extends Component{
                     this.state={
                         user:{ following:[], followers:[]},
                         redirectToSignin:false,
-                        following:false
+                        following:false,
+                        error: ''
                     }
                 }
                 
@@ -29,6 +30,31 @@ class Profile extends Component{
             return match
 
         }
+
+        //This will 
+
+        clickFollowButton = callApi =>{
+          //  callApi()  
+         const user_Id = this.props.match.params.user_Id
+         const token =  isLoggedIn.token;
+
+          callApi(user_Id,token, this.state.user._id)
+          .then(data=>{
+              if(data.error){
+                  this.setState({error:data.error})
+              }
+              else{
+                  this.setState({user:data, following:!this.state.following})
+              }
+          })
+
+        }
+
+
+
+
+
+
        
         init = (userId) =>{
         const token = isLoggedIn().token 
@@ -110,7 +136,10 @@ class Profile extends Component{
                                 ):
                                 <p>
                                     
-                                    <FollowProfileButton following={this.state.following}/>
+                                    <FollowProfileButton following={this.state.following}
+                                    
+                                    onButtonClick={this.clickFollowButton}
+                                    />
                                 </p>
                                 }        
                                 

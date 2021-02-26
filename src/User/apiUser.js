@@ -77,3 +77,23 @@ export const update = (user_Id, token,user)=>{
           }
       }
   }
+
+  export const follow = (user_Id, token,follow_Id)=>{
+
+    //console.log("UPDATE USER ", user)
+            
+    return   fetch(`${process.env.REACT_APP_API_URL}/user/follow `,{
+          method:"PUT",
+          headers:{
+              Accept:"application/json",
+              "Content-Type":"application/json",
+              Authorization:`Bearer ${token}`
+          },
+          body: JSON.stringify({user_Id,follow_Id})
+      })
+      .then(response =>{
+          return response.json();
+      })
+      .catch(err=>console.log(err))
+
+  }
