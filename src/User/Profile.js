@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 import {read} from './apiUser'
 import DefaultProfile from '../images/avatar.png'
 import DeleteUser from './DeleteUser'
+import FollowProfileButton from './FollowProfileButton'
 
 
 class Profile extends Component{
@@ -11,11 +12,23 @@ class Profile extends Component{
             constructor(){
                     super()
                     this.state={
-                        user:"",
-                        redirectToSignin:false
+                        user:{ following:[], followers:[]},
+                        redirectToSignin:false,
+                        following:false
                     }
                 }
+                
+                //check follow
 
+        checkFollow = user => {
+            const jwt = isLoggedIn()
+            const match = user.followers.find(follower=>{
+                //one id has many other ids(followers) and vice versa
+                return follower._id=== jwt.user._id
+            })
+            return match
+
+        }
        
         init = (userId) =>{
         const token = isLoggedIn().token 
@@ -25,7 +38,9 @@ class Profile extends Component{
                 this.setState({redirectToSignin:true})
 
                 }else{
-                    this.setState({ user:data })
+                    let following = this.checkFollow(data)
+
+                    this.setState({ user:data , following})
                 }
             })
 
@@ -82,7 +97,7 @@ class Profile extends Component{
                                             ).toDateString()}`
                                             }
                                     </p>
-                                {isLoggedIn().user && isLoggedIn().user._id == user._id && (
+                                {isLoggedIn().user && isLoggedIn().user._id == user._id? (
                                     <div className="d-inline-block mt-5">
                                         <Link 
                                         className="btn btn-raised btn-success mr-5"
@@ -92,9 +107,14 @@ class Profile extends Component{
                                         </Link>
                                         <DeleteUser user_Id={user._id}/>
                                     </div>
-                                )}        
+                                ):
+                                <p>
+                                    
+                                    <FollowProfileButton following={this.state.following}/>
+                                </p>
+                                }        
                                 
-                            </div>
+                            </div>  
                         </div>
                         <div className="row">
                              <div className="col md-12 mt-5 mb-5">
