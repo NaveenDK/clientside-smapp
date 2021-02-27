@@ -21,7 +21,7 @@ class Profile extends Component{
                 
                 //check follow
 
-        checkFollow = user => {
+    checkFollow = user => {
             const jwt = isLoggedIn()
             const match = user.followers.find(follower=>{
                 //one id has many other ids(followers) and vice versa
@@ -33,7 +33,7 @@ class Profile extends Component{
 
         //This will 
 
-        clickFollowButton = callApi =>{
+    clickFollowButton = callApi =>{
           //  callApi()  
        //  const user_Id = this.props.match.params.user_Id
        const user_Id = isLoggedIn().user._id
@@ -43,6 +43,7 @@ class Profile extends Component{
         console.log("3>>\n");   console.log(this.state.user._id)
           callApi(user_Id,token, this.state.user._id)
           .then(data=>{
+            console.log("data: "); console.log(data);
               if(data.error){
                   this.setState({error:data.error})
               }
