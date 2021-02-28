@@ -140,10 +140,10 @@ class Profile extends Component{
                                 ):
                                 <p>
                                     
-                                    <FollowProfileButton following={this.state.following}
-                                    
-                                    onButtonClick={this.clickFollowButton}
-                                    />
+                             <FollowProfileButton following={this.state.following}
+                                     onButtonClick={this.clickFollowButton}
+
+                                />
                                 </p>
                                 }        
                                 
