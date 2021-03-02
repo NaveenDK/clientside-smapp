@@ -81,7 +81,8 @@ export const update = (user_Id, token,user)=>{
   export const follow = (user_Id, token,follow_Id)=>{
 
     //console.log("UPDATE USER ", user)
-            
+    console.log ("user_Id, follow_Id")
+    //console.log(JSON.stringify({user_Id,follow_Id}))
     return   fetch(`${process.env.REACT_APP_API_URL}/user/follow `,{
           method:"PUT",
           headers:{
@@ -90,10 +91,40 @@ export const update = (user_Id, token,user)=>{
               Authorization:`Bearer ${token}`
           },
           body: JSON.stringify({user_Id,follow_Id})
+
+        
       })
       .then(response =>{
           return response.json();
       })
-      .catch(err=>console.log(err))
+      .catch(err=>console.log(err)
+   
+      )
+    
+  }
 
+  
+  export const unfollow = (user_Id, token,unfollow_Id)=>{
+
+    //console.log("UPDATE USER ", user)
+    console.log ("user_Id, follow_Id")
+    //console.log(JSON.stringify({user_Id,follow_Id}))
+    return   fetch(`${process.env.REACT_APP_API_URL}/user/unfollow `,{
+          method:"PUT",
+          headers:{
+              Accept:"application/json",
+              "Content-Type":"application/json",
+              Authorization:`Bearer ${token}`
+          },
+          body: JSON.stringify({user_Id,unfollow_Id})
+
+        
+      })
+      .then(response =>{
+          return response.json();
+      })
+      .catch(err=>console.log(err)
+   
+      )
+    
   }

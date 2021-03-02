@@ -37,10 +37,8 @@ class Profile extends Component{
           //  callApi()  
        //  const user_Id = this.props.match.params.user_Id
        const user_Id = isLoggedIn().user._id
-         const token =  isLoggedIn().token;
-        console.log("1>>\n"); console.log(user_Id)
-        console.log("2>>\n");  console.log(token)
-        console.log("3>>\n");   console.log(this.state.user._id)
+       const token =  isLoggedIn().token;
+       
           callApi(user_Id,token, this.state.user._id)
           .then(data=>{
             console.log("data: "); console.log(data);
